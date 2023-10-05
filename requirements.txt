@@ -1,2 +1,5 @@
 Flask
 pylint
+wheel == 0.38.1
+setuptools == 65.5.1
+mercurial == 4.6.1
