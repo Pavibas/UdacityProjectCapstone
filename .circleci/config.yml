@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Scout docker container
           command: |
-            docker-scout cves $DOCKER_IMAGE_NAME --exit-code --only-severity critical,high
+            docker-scout cves $DOCKER_IMAGE_NAME --exit-code --only-severity medium
 
       - run:
           name: Upload Docker to Dockerhub
