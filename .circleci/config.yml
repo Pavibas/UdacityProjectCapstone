@@ -33,7 +33,7 @@ jobs:
 
   build-scan-upload-docker:
     docker:
-      - image: circleci/golang:1.15
+      - image: cimg/base:stable
 
     working_directory: ~/repo
 
@@ -41,14 +41,14 @@ jobs:
       - checkout
 
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.24
 
       - run:
-          name: Install docker-scan-plugin
+          name: Install Docker Scout
           command: |
-            mkdir -p ~/.docker/cli-plugins && \
-            curl https://github.com/docker/scan-cli-plugin/releases/latest/download/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan &&\
-            chmod +x ~/.docker/cli-plugins/docker-scan
+            env
+            curl -sSfL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh | sh -s -- -b /home/circleci/bin
+            echo $DOCKER_HUB_PAT | docker login -u $DOCKER_HUB_USER --password-stdin
 
       - run:
           name: Build docker container
@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Scout docker container
           command: |
-            docker scout $DOCKER_IMAGE_NAME
+            docker-scout cves $DOCKER_IMAGE_NAME --exit-code --only-severity critical,high
 
       - run:
           name: Upload Docker to Dockerhub
