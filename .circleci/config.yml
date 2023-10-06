@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test-build:
     docker:
-      - image: python:3.7.3-stretch
+      - image: python:3.11.6-alpine3.18
 
     steps:
       - checkout
@@ -33,7 +33,7 @@ jobs:
 
   build-scan-upload-docker:
     docker:
-      - image: cimg/base:stable
+      - image: python:3.11.6-alpine3.18
 
     working_directory: ~/repo
 
