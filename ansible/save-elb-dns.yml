@@ -7,8 +7,13 @@
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
   tasks:
+    - name: Update apt-get
+      shell: "sudo apt-get update"
+      register: elb_dns
+      args:
+        chdir: $HOME
     - name: Install kubectl
-      shell: "sudo snap install kubectl"
+      shell: "sudo apt-get install -y kubectl"
       register: elb_dns
       args:
         chdir: $HOME
