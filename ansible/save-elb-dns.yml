@@ -7,26 +7,11 @@
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
   tasks:
-    - name: Update apt-get
-      shell: "sudo apt-get update"
-      args:
-        chdir: $HOME
-    - name: Install ca-certificates
-      shell: "sudo apt-get install -y apt-transport-https ca-certificates curl"
-      args:
-        chdir: $HOME
-    - name: Install package repository
-      shell: "sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg"
-      args:
-        chdir: $HOME
-    - name: Update apt-get
-      shell: "sudo apt-get update"
-      args:
-        chdir: $HOME
     - name: Install kubectl
-      shell: "sudo apt-get install -y kubectl"
+      shell: "sudo snap install kubectl --classic"
       args:
         chdir: $HOME
+
     - name: Get the LoadBalancer's DNS name
       shell: "kubectl get svc {{ ENVIRONMENT_NAME }}-service"
       register: elb_dns
