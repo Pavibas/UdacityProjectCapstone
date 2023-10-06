@@ -149,6 +149,12 @@ jobs:
           command: |
             apk add --update ansible
       - run:
+          name: Wait for management instances to become reachable
+          command: |
+            cat ~/inventory.txt
+            echo "Wait 120 seconds..."
+            sleep 120
+      - run:
           name: Configure server
           command: |
             if grep -q "No changes to deploy" ~/checkIfDeployed.txt
